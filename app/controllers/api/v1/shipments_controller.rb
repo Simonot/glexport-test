@@ -5,6 +5,7 @@ class Api::V1::ShipmentsController < Api::V1::ApplicationController
   before_action :sort_filter_params
 
   def index
+    @shipments = @shipments.page(params[:page]).per(params[:per].nil? ? 4 : params[:per])
   end
 
   private
