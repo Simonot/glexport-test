@@ -1,3 +1,12 @@
+
+glexport-test-simon-duvergier
+=============
+
+I have added a docker compose file to better make running the project and the test.
+1. Install docker and docker-compose
+2. run docker-compose up --build (which will up the server connected to a mariadb and a redis)
+3. run docker-compose exec glexport bundle exec rspec
+
 glexport-test
 =============
 
