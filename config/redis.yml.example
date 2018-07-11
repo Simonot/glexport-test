@@ -1,0 +1,9 @@
+default: &DEFAULT
+  host: localhost-redis
+  port: 6379
+  namespace: glexport
+  db: 3
+
+production: *DEFAULT
+development: *DEFAULT
+test: *DEFAULT

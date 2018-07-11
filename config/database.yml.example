@@ -1,0 +1,13 @@
+default: &default
+  adapter:  mysql2
+  database: glexport
+  username: root
+  host:  localhost
+  pool: 50
+production:
+  <<: *default
+development:
+  <<: *default
+test:
+  <<: *default
+  database: glexport_test

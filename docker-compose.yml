@@ -1,0 +1,54 @@
+version: '2'
+
+services:
+  glexport:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - './app:/home/glexport-test/app'
+      - './config/routes.rb:/home/glexport-test/config/routes.rb'
+      - './spec:/home/glexport-test/spec'
+      - './.rspec:/home/glexport-test/.rspec'
+      - './Guardfile:/home/glexport-test/Guardfile'
+      - './coverage:/home/glexport-test/coverage'
+      - './Gemfile.lock:/home/glexport-test/Gemfile.lock'
+    env_file:
+      - '.env'
+    environment:
+      MYSQL_HOST: glexport_host
+      RAILS_ENV: $RAILS_ENV
+    depends_on:
+      - glexport_host
+    networks:
+      - glexport_int
+    links:
+      - glexport_host
+    command: ["glexport_host:3306", "--", "./entrypoint.sh"]
+
+  glexport_host:
+    image: hauptmedia/mariadb:10.1
+    hostname: glexport_host
+    networks:
+      - glexport_int
+    env_file:
+      - '.env'
+    environment:
+      - REPLICATION_PASSWORD=test
+      - GALERA=On
+      - CLUSTER_NAME=maria_cluster
+      - NODE_NAME=glexport_host
+      - CLUSTER_ADDRESS=gcomm://
+
+  glexport_cache:
+    image: redis
+    hostname: glexport_cache
+    env_file:
+    - '.env'
+    networks:
+      - glexport_int
+
+networks:
+  glexport_int:

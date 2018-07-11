@@ -1,0 +1,8 @@
+default: &DEFAULT
+  host: glexport_cache
+  port: 6379
+  namespace: glexport
+
+production: *DEFAULT
+development: *DEFAULT
+test: *DEFAULT
